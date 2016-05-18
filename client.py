@@ -1,6 +1,6 @@
 
 import socket
-imp sys
+import sys
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         
 HOST = socket.gethostname()
@@ -8,9 +8,9 @@ PORT = 5812                # Reserve a port for your service.
 
 s.connect((HOST, PORT))
 try:
-    s.sendall(bytes(data))
+    s.sendall(raw_input(data))
     print ('message is being sending')
 
-    received = str(s.receive(1024))  
-    print ('received "/s" ' % data)
+    received = str(s.recv(1024))  
+    print ('received "/s" ' , received)
 s.close                     # Close the socket when done
