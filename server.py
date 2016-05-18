@@ -32,7 +32,7 @@ while True:
     if not data:
         print ('there is no more message')
         break
-    else
+    else:
         print ('sending data to other ')
         conn.sendall(data)
 conn.close()    
