@@ -7,7 +7,7 @@ HOST = socket.gethostname()
 PORT = 5812                # Reserve a port for your service.
 
 s.connect((HOST, PORT))
-try:
+while True:
     s.sendall(raw_input(data))
     print ('message is being sending')
 
