@@ -12,5 +12,5 @@ while True:
     print ('message is being sending')
 
     received = str(s.recv(1024))  
-    print ('received "/s" ' , received)
+    print ('received : ' , received)
 s.close                     # Close the socket when done
