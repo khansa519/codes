@@ -25,48 +25,59 @@ print 'Socket bind complete'
 # Start listening on socket
 s.listen(2)
 print 'Socket now listening'
-j=0
-i=0
-c=[]
+j = 0
+i = 0
+d = []
 a = []
+k = 0
 arr = ['client1', 'client2']
-# Function for handling connections. This will be used to create threads
+
 def clientthread (conn):
-    # Sending message to connected client
     conn.send('Welcome to the server. Type something and hit enter\n')  # send only takes string
     for j in range(i-1):
-        conn.sendall('connect to' + c[j])
+     conn.sendall('connect to : ' + b[j]+ '\n')
+     a[j].sendall(' other clients are :' + str(com))
 
-       # infinite loop so that function do not terminate and thread do not end.
-        while True:
-            data = conn.recv(1024)
-            if conn == a[0]:
-                conn = a[1]
-                print str(arr[0]) + ": " + data
-                conn.sendall(data)
-                conn = a[0]
+    conn.sendall(' to whom u want to chat ...?')
+    ask = conn.recv(1024)
+    d.append(conn)
 
-            elif conn == a[1]:
-                conn = a[0]
-                print str(arr[1]) + ": " + data
-                conn.sendall(data)
-                conn = a[1]
+    for k in range(i):
+     if ask ==  b[k]:
+         b[k] = a[k]
+         d.append(a[k])
+    while True:
+                data = conn.recv(1024)
+                if conn == d[0]:
+                    conn = d[1]
+                   # print str(arr[0]) + ": " + data
+                    print data
+                    conn.sendall(data)
+                    conn = d[0]
 
-            if not data:
-                break
+                elif conn == d[1]:
+                    conn = d[0]
+                    #print str(arr[1]) + ": " + data
+                    print data
+                    conn.sendall(data)
+                    conn = d[1]
+
+                if not data:
+                     break
         # came out of loop
-        conn.close()
-
+    conn.close()
+b =[]
 i = 0
+com=0
 # now keep talking with the client
 while 1:
     # wait to accept a connection - blocking call
     conn, addr = s.accept()
-    b = [addr]
-    b.append(addr[1])
     a.append(conn)
     print 'Connected with ' + addr[0] + ':' + str(addr[1])
-    # start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
+    b.append(str(addr[1]))
+    com = addr[1]
+    # start nb.append(str(addr[1]))ew thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
     start_new_thread(clientthread, (conn,))
     i= i+ 1
 
